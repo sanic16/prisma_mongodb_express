@@ -20,6 +20,9 @@ authorRouter.get("/", async (req: Request, res: Response) => {
 authorRouter.get("/:id", async (req: Request, res: Response) => {
   try {
     const author = await AuthorService.getAuthor(req.params.id);
+    if (!author) {
+      return res.status(404).json({ message: "Author not found" });
+    }
     return res.status(200).json(author);
   } catch (error: unknown) {
     console.error("Error from authorRouter.get", error);
